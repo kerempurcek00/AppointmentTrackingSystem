@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginPage">
+
+    <fragment
+        android:id="@+id/loginPage"
+        android:name="com.kerempurcek.appointmenttrackingsystem.TrackingSystem.presentation.ui.LoginPage"
+        android:label="fragment_login_page"
+        tools:layout="@layout/fragment_login_page" >
+        <action
+            android:id="@+id/action_loginPage_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginPage_to_userMainFragment"
+            app:destination="@id/userMainFragment" />
+        <action
+            android:id="@+id/action_loginPage_to_barberMainFragment"
+            app:destination="@id/barberMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.kerempurcek.appointmenttrackingsystem.TrackingSystem.presentation.ui.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_loginPage"
+            app:destination="@id/loginPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/userMainFragment"
+        android:name="com.kerempurcek.appointmenttrackingsystem.TrackingSystem.presentation.ui.UserMainFragment"
+        android:label="fragment_user_main"
+        tools:layout="@layout/fragment_user_main" >
+        <action
+            android:id="@+id/action_userMainFragment_to_appoinmentFragment"
+            app:destination="@id/appoinmentFragment" />
+        <action
+            android:id="@+id/action_userMainFragment_to_userPageFragment"
+            app:destination="@id/userPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/appoinmentFragment"
+        android:name="com.kerempurcek.appointmenttrackingsystem.TrackingSystem.presentation.ui.AppoinmentFragment"
+        android:label="fragment_appoinment"
+        tools:layout="@layout/fragment_appoinment" >
+        <action
+            android:id="@+id/action_appoinmentFragment_to_userPageFragment"
+            app:destination="@id/userPageFragment" />
+        <action
+            android:id="@+id/action_appoinmentFragment_to_approveAppointment"
+            app:destination="@id/approveAppointment" />
+        <action
+            android:id="@+id/action_appoinmentFragment_to_userMainFragment"
+            app:destination="@id/userMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userPageFragment"
+        android:name="com.kerempurcek.appointmenttrackingsystem.TrackingSystem.presentation.ui.UserPageFragment"
+        android:label="fragment_user_page"
+        tools:layout="@layout/fragment_user_page" >
+        <action
+            android:id="@+id/action_userPageFragment_to_appoinmentFragment"
+            app:destination="@id/appoinmentFragment" />
+        <action
+            android:id="@+id/action_userPageFragment_to_userMainFragment"
+            app:destination="@id/userMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/approveAppointment"
+        android:name="com.kerempurcek.appointmenttrackingsystem.TrackingSystem.presentation.ui.ApproveAppointment"
+        android:label="fragment_approve_appointment"
+        tools:layout="@layout/fragment_approve_appointment" >
+        <action
+            android:id="@+id/action_approveAppointment_to_userMainFragment"
+            app:destination="@id/userMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/barberMainFragment"
+        android:name="com.kerempurcek.appointmenttrackingsystem.TrackingSystem.presentation.ui.BarberMainFragment"
+        android:label="fragment_barber_main"
+        tools:layout="@layout/fragment_barber_main" >
+        <action
+            android:id="@+id/action_barberMainFragment_to_ownerUserFragment"
+            app:destination="@id/ownerUserFragment" />
+        <action
+            android:id="@+id/action_barberMainFragment_to_ownerAppointmentFragment"
+            app:destination="@id/ownerAppointmentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ownerUserFragment"
+        android:name="com.kerempurcek.appointmenttrackingsystem.TrackingSystem.presentation.ui.OwnerUserFragment"
+        android:label="fragment_owner_user"
+        tools:layout="@layout/fragment_owner_user" >
+        <action
+            android:id="@+id/action_ownerUserFragment_to_barberMainFragment"
+            app:destination="@id/barberMainFragment" />
+        <action
+            android:id="@+id/action_ownerUserFragment_to_ownerAppointmentFragment"
+            app:destination="@id/ownerAppointmentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ownerAppointmentFragment"
+        android:name="com.kerempurcek.appointmenttrackingsystem.TrackingSystem.presentation.ui.OwnerAppointmentFragment"
+        android:label="fragment_owner_appointment"
+        tools:layout="@layout/fragment_owner_appointment" >
+        <action
+            android:id="@+id/action_ownerAppointmentFragment_to_barberMainFragment"
+            app:destination="@id/barberMainFragment" />
+        <action
+            android:id="@+id/action_ownerAppointmentFragment_to_ownerUserFragment"
+            app:destination="@id/ownerUserFragment" />
+    </fragment>
+</navigation>

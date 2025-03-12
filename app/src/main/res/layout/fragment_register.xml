@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fdfffc"
+    tools:context=".TrackingSystem.presentation.ui.RegisterFragment">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="413dp"
+        android:layout_height="171dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Kayıt Ol!"
+            android:textColor="@color/textColor"
+            android:textSize="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="128dp"
+            android:layout_marginBottom="20dp"
+            android:rotationY="-180"
+            android:src="@drawable/barbericon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textWelcome" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/PhoneNumberEditor"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        app:boxBackgroundColor="@color/white"
+        app:boxStrokeColor="@color/brand"
+        app:boxStrokeWidth="0dp"
+        app:expandedHintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
+        app:placeholderText="Kullanıcı Adı"
+        app:placeholderTextAppearance="@font/poppins_medium"
+        app:placeholderTextColor="#202244">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/OwnerNameEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:width="52dp"
+            android:inputType="textPersonName" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/OutlinedEmailRegister"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        app:boxBackgroundColor="@color/white"
+        app:boxStrokeColor="@color/brand"
+        app:boxStrokeWidth="0dp"
+        app:expandedHintEnabled="false"
+
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PhoneNumberEditor"
+        app:placeholderText="Email"
+        app:placeholderTextAppearance="@font/poppins_medium"
+        app:placeholderTextColor="#202244">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/TextEmailRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:width="52dp"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/OutlinedPasswordRegister"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        app:boxBackgroundColor="@color/white"
+        app:boxStrokeColor="@color/brand"
+        app:boxStrokeWidth="0dp"
+        app:endIconMode="password_toggle"
+        app:expandedHintEnabled="false"
+        app:layout_constraintEnd_toEndOf="@+id/OutlinedEmailRegister"
+        app:layout_constraintStart_toStartOf="@+id/OutlinedEmailRegister"
+        app:layout_constraintTop_toBottomOf="@+id/OutlinedEmailRegister"
+        app:placeholderText="Parola"
+        app:placeholderTextAppearance="@font/poppins_medium"
+        app:placeholderTextColor="#202244">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/TextPasswordRegister"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:width="52dp"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/RegisterPageButton"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/buttondesign"
+        android:fontFamily="@font/poppins_medium"
+        android:padding="10dp"
+        android:text="Kayıt Ol"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/OutlinedPasswordRegister" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

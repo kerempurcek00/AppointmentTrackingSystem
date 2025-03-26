@@ -7,7 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".TrackingSystem.presentation.ui.BarberMainFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/ProgressBarOwMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout5"
         android:layout_width="match_parent"
@@ -47,9 +56,9 @@
 
         <ImageButton
             android:id="@+id/homeButton"
-            android:layout_width="55dp"
-            android:layout_height="45dp"
-            android:layout_marginBottom="10dp"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
             android:backgroundTint="#00FFFFFF"
             android:scaleType="fitXY"
             android:src="@drawable/home"
@@ -100,6 +109,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

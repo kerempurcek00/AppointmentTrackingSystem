@@ -7,7 +7,6 @@
     android:background="#fdfffc"
     tools:context=".TrackingSystem.presentation.ui.LoginPage">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
@@ -32,13 +31,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
 
-            app:placeholderText="Kullanıcı Adı"
+            app:placeholderText="Email"
             app:placeholderTextAppearance="@font/poppins_medium"
 
             app:placeholderTextColor="#202244">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/TextUsername"
+                android:id="@+id/LoginEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:width="52dp"
@@ -67,62 +66,13 @@
             app:placeholderTextColor="#202244">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/LoginPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:width="52dp"
                 android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/TextForgotPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Parolamı Unuttum"
-            android:textColor="@color/brand"
-            android:fontFamily="@font/poppins_medium"
-            android:textSize="16dp"
-
-            app:layout_constraintEnd_toEndOf="@+id/OutlinedPasswordRegister"
-            app:layout_constraintTop_toBottomOf="@+id/OutlinedPasswordRegister" />
-
-        <com.google.android.material.button.MaterialButtonToggleGroup
-            android:id="@+id/ToggleGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:selectionRequired="true">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/UserButton"
-                style="@style/Widget.MaterialComponents.Button"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#FFFFFF"
-                android:text="Kullanıcı"
-                android:textAlignment="center"
-                android:textColor="@color/textColor"
-                app:cornerRadius="5dp"
-                app:icon="@drawable/person"
-                app:iconGravity="start" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/OwnerButton"
-                style="@style/Widget.MaterialComponents.Button"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#FFFFFF"
-                android:text="Berber"
-                android:textAlignment="center"
-                android:textColor="@color/textColor"
-                app:cornerRadius="5dp"
-                app:icon="@drawable/store_24px"
-                app:iconGravity="end" />
-
-        </com.google.android.material.button.MaterialButtonToggleGroup>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -23,10 +23,10 @@
 
         <ImageButton
             android:id="@+id/userButton"
-            android:layout_width="55dp"
-            android:layout_height="45dp"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="20dp"
             android:backgroundTint="#00FFFFFF"
             android:scaleType="fitXY"
             android:src="@drawable/usericon"
@@ -75,7 +75,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            app:cardBackgroundColor="@color/white"
+            app:cardBackgroundColor="#FFFFFF"
             app:cardCornerRadius="5dp"
             app:cardElevation="5dp"
             app:cardPreventCornerOverlap="false"
@@ -88,6 +88,24 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/IsOpenButton"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/buttondesign"
+
+                    android:fontFamily="@font/poppins_medium"
+                    android:text=""
+                    android:textAlignment="center"
+
+                    android:textSize="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.512"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewOwnerPhone" />
 
                 <TextView
                     android:id="@+id/ownerName"
@@ -112,7 +130,7 @@
                     android:backgroundTint="#edede9"
                     android:fontFamily="@font/poppins_medium"
                     android:padding="5dp"
-                    android:text="Emrah Berberoğlu"
+                    android:text=""
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="12dp"
@@ -169,7 +187,7 @@
                     android:backgroundTint="#edede9"
                     android:fontFamily="@font/poppins_medium"
                     android:padding="5dp"
-                    android:text="Emrah Berber Gölcük"
+                    android:text=""
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="12dp"
@@ -186,7 +204,7 @@
                     android:backgroundTint="#edede9"
                     android:fontFamily="@font/poppins_medium"
                     android:padding="5dp"
-                    android:text="5340568745"
+                    android:text=""
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="12dp"
@@ -210,6 +228,18 @@
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/LinearProgressBarOwnerUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="5dp"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
@@ -222,5 +252,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Çıkış Yap"
+        android:fontFamily="@font/poppins_medium"
+        android:textSize="15dp"
+        android:background="@drawable/buttondesign"
+        android:backgroundTint="#32F2A9A9"
+        android:textColor="#FF0202"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout9" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,34 @@
     android:background="#fdfffc"
     tools:context=".TrackingSystem.presentation.ui.UserPageFragment">
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout7" />
+    <TextView
+        android:id="@+id/logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Çıkış Yap"
+        android:textColor="#FF0202"
+        android:textSize="15dp"
+        android:background="@drawable/buttondesign"
+        android:backgroundTint="#32F2A9A9"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout8" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout5"
         android:layout_width="match_parent"
@@ -20,10 +48,10 @@
 
         <ImageButton
             android:id="@+id/userButton"
-            android:layout_width="55dp"
-            android:layout_height="45dp"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="20dp"
             android:backgroundTint="#00FFFFFF"
             android:scaleType="fitXY"
             android:src="@drawable/usericon"
@@ -73,22 +101,21 @@
             android:layout_height="100dp"
             android:layout_marginTop="30dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/personexample"
+            android:src="@drawable/profile"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:strokeColor="@color/brand"
-            app:strokeWidth="5dp" />
+            app:strokeWidth="0dp" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/TextNameSurname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/poppins"
-            android:text="kerempurcek00"
+            android:text=""
             android:textColor="@color/brand"
             android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -107,6 +134,18 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout7">
 
         <TextView
+            android:id="@+id/textViewNotAppointment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Henüz Randevunuz Yok!"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -120,6 +159,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/CardView"
             android:layout_width="match_parent"
             android:layout_height="350dp"
             app:cardBackgroundColor="#FFFFFF"
@@ -149,35 +189,24 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-                <TextClock
-                    android:id="@+id/textClock2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:fontFamily="@font/poppins_medium"
-                    android:textColor="@color/textColor"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                    app:layout_constraintTop_toBottomOf="@+id/BarberShopName" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/AppointmentDateTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="14/02/2025"
+                    android:text=""
                     android:textColor="@color/textColor"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="80dp"
-                    android:layout_height="68dp"
+                    android:id="@+id/imageViewEmail"
+                    android:layout_width="150dp"
+                    android:layout_height="96dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:src="@drawable/logo"
@@ -185,20 +214,22 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/BarberShopName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="30dp"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Kocaeli Gölcük Emrah Berber"
+                    android:text=""
                     android:textColor="@color/textColor"
                     android:textSize="20dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+                    app:layout_constraintTop_toBottomOf="@+id/imageViewEmail" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

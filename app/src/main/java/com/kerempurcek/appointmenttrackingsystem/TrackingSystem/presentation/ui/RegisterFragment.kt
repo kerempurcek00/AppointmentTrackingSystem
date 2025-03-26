@@ -5,10 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.navigation.Navigation
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 import com.kerempurcek.appointmenttrackingsystem.R
 import com.kerempurcek.appointmenttrackingsystem.databinding.FragmentLoginPageBinding
 import com.kerempurcek.appointmenttrackingsystem.databinding.FragmentRegisterBinding
+import kotlinx.coroutines.NonDisposableHandle.parent
 
 
 class RegisterFragment : Fragment() {
@@ -18,8 +27,16 @@ class RegisterFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    //Firebase
+    private  lateinit var  auth:FirebaseAuth
+    private lateinit var  db:FirebaseFirestore
+    // UserType
+    var selectedItem = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        auth = Firebase.auth
+        db = Firebase.firestore
 
     }
 
@@ -39,6 +56,13 @@ class RegisterFragment : Fragment() {
         //Kayıt Ol Butonuna Basıldığında Giriş Sayfasına Yönlendirme
         binding.RegisterPageButton.setOnClickListener{RegisterToLogin(it)}
 
+       getspinnerdata()
+
+
+
+
+
+
     }
 
     override fun onDestroyView() {
@@ -48,9 +72,69 @@ class RegisterFragment : Fragment() {
     }
 
 fun RegisterToLogin(view: View){
-    val action = RegisterFragmentDirections.actionRegisterFragmentToLoginPage()
-    Navigation.findNavController(view).navigate(action)
+
+    //Firebase Auth
+    val email = binding.TextEmailRegister.text.toString()
+    val password = binding.TextPasswordRegister.text.toString()
+
+
+    if(email.isNotEmpty()&&password.isNotEmpty()){
+        auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener{task ->
+            if(task.isSuccessful){
+                val userId = auth.currentUser?.uid
+                if(!userId.isNullOrEmpty()){
+                    addDataUserType()
+                }
+
+                val action = RegisterFragmentDirections.actionRegisterFragmentToLoginPage()
+                Navigation.findNavController(view).navigate(action)
+
+            }
+
+        }.addOnFailureListener{exception ->
+            Toast.makeText(requireContext(),exception.localizedMessage,Toast.LENGTH_LONG).show()
+
+        }
+
+    }
+
+
+
+}
+fun getspinnerdata(){
+    val spinner  = binding.spinnerUserBarber
+
+    val adapter = ArrayAdapter<String>(requireContext(),android.R.layout.simple_spinner_item)
+    adapter.add("Kullanıcı")
+    adapter.add("Berber")
+
+    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+    spinner.adapter = adapter
+    spinner.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+        override fun onItemSelected(parent:AdapterView<*>?,view:View,position:Int,id:Long){
+            Toast.makeText(requireContext(),"Lütfen kullanıcı türünüzü seçiniz!",Toast.LENGTH_LONG).show()
+            selectedItem = parent?.getItemAtPosition(position).toString()
+            println(selectedItem)
+
+        }
+
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+            // Hiçbir öğe seçilmediğinde yapılacak işlemler
+
+        }
+    }
 }
 
+    fun addDataUserType(){
+
+        // FireStore
+        val UserTypeMap = hashMapOf<String,Any>()
+        val UserId = auth.currentUser?.uid    // userID neyse döküman id olacak
+        UserTypeMap.put("userType",selectedItem)
+        UserTypeMap.put("nameSurname",binding.TextViewNameSurname.text.toString())
+
+        db.collection("UserTypes").document(UserId!!).set(UserTypeMap)
+    }
 
 }

@@ -59,12 +59,12 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
-        app:placeholderText="Kullanıcı Adı"
+        app:placeholderText="Ad Soyad"
         app:placeholderTextAppearance="@font/poppins_medium"
         app:placeholderTextColor="#202244">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/OwnerNameEdit"
+            android:id="@+id/TextViewNameSurname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:width="52dp"
@@ -134,7 +134,7 @@
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="120dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/buttondesign"
         android:fontFamily="@font/poppins_medium"
@@ -142,7 +142,19 @@
         android:text="Kayıt Ol"
         android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/OutlinedPasswordRegister" />
+
+    <Spinner
+        android:id="@+id/spinnerUserBarber"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="@color/white"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/OutlinedPasswordRegister" />
 

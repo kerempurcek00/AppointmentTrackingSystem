@@ -67,6 +67,9 @@
         <action
             android:id="@+id/action_userPageFragment_to_userMainFragment"
             app:destination="@id/userMainFragment" />
+        <action
+            android:id="@+id/action_userPageFragment_to_loginPage"
+            app:destination="@id/loginPage" />
     </fragment>
     <fragment
         android:id="@+id/approveAppointment"
@@ -100,6 +103,9 @@
         <action
             android:id="@+id/action_ownerUserFragment_to_ownerAppointmentFragment"
             app:destination="@id/ownerAppointmentFragment" />
+        <action
+            android:id="@+id/action_ownerUserFragment_to_loginPage"
+            app:destination="@id/loginPage" />
     </fragment>
     <fragment
         android:id="@+id/ownerAppointmentFragment"

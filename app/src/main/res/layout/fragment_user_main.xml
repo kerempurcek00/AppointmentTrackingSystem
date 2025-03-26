@@ -8,6 +8,17 @@
     tools:context=".TrackingSystem.presentation.ui.UserMainFragment">
 
 
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressBar1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:trackColor="@color/black" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout5"
         android:layout_width="match_parent"
@@ -47,9 +58,9 @@
 
         <ImageButton
             android:id="@+id/homeButton"
-            android:layout_width="55dp"
-            android:layout_height="45dp"
-            android:layout_marginBottom="10dp"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
             android:backgroundTint="#00FFFFFF"
             android:scaleType="fitXY"
             android:src="@drawable/home"
@@ -57,6 +68,7 @@
             app:layout_constraintEnd_toStartOf="@+id/userButton"
             app:layout_constraintStart_toEndOf="@+id/appoinmentButton"
             app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -77,7 +89,6 @@
             android:text="Dükkanlar"
             android:textColor="@color/textColor"
             android:textSize="40dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -85,7 +96,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="632dp"
+        android:layout_height="600dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

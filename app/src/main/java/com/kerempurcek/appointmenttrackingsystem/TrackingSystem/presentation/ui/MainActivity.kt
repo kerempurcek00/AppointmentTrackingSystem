@@ -9,12 +9,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import com.kerempurcek.appointmenttrackingsystem.R
 
 class MainActivity : AppCompatActivity() {
-
+        private lateinit var  auth :FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
-
+        auth = Firebase.auth
         //StatusBar and navigationBar fullScreen Mode
         enableEdgeToEdge(
                    statusBarStyle = SystemBarStyle.light(Color.TRANSPARENT,Color.TRANSPARENT),

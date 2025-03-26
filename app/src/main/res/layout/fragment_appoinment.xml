@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/L"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fdfffc"
@@ -33,10 +34,10 @@
 
         <ImageButton
             android:id="@+id/appoinmentButton"
-            android:layout_width="55dp"
-            android:layout_height="45dp"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
             android:layout_marginStart="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="20dp"
             android:backgroundTint="#00FFFFFF"
             android:scaleType="fitXY"
             android:src="@drawable/appoinment2"
@@ -67,12 +68,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/LinearProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:indeterminate="true"
+            app:layout_constraintBottom_toTopOf="@+id/NameOutlined"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <Button
             android:id="@+id/appoinmentRegister"
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/buttondesign"
             android:fontFamily="@font/poppins_medium"
@@ -82,7 +95,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/NameOutlinedAppoinment" />
+            app:layout_constraintTop_toBottomOf="@+id/NameSurnameOutlinedAppoinment" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/NameOutlinedAppoinment"
@@ -100,22 +113,22 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinner2"
-            app:placeholderText="Kullanıcı adınız"
+            app:placeholderText="Email"
             app:placeholderTextAppearance="@font/poppins_medium"
             app:placeholderTextColor="#202244">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/nameAppoinment"
+                android:id="@+id/EmailAppointment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:width="52dp"
                 android:cursorVisible="false"
+                android:enabled="false"
                 android:focusable="true"
                 android:inputType="text"
-                android:longClickable="false"
 
 
-                />
+                android:longClickable="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -188,6 +201,40 @@
             app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toEndOf="@+id/NameOutlinedAppoinment"
             app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/NameSurnameOutlinedAppoinment"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            app:boxBackgroundColor="@color/white"
+            app:boxStrokeColor="@color/brand"
+            app:boxStrokeWidth="0dp"
+            app:expandedHintEnabled="false"
+            app:layout_constraintEnd_toEndOf="@+id/NameOutlined"
+            app:layout_constraintStart_toStartOf="@+id/NameOutlinedAppoinment"
+            app:layout_constraintTop_toBottomOf="@+id/NameOutlinedAppoinment"
+            app:placeholderText="Ad Soyad"
+            app:placeholderTextAppearance="@font/poppins_medium"
+            app:placeholderTextColor="#202244">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/NameSurnameAppointment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:width="52dp"
+                android:cursorVisible="false"
+                android:enabled="false"
+
+
+                android:focusable="true"
+                android:inputType="text"
+                android:longClickable="false" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

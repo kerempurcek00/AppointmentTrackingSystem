@@ -17,7 +17,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.navigation.NavigationBarPresenter
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 import com.kerempurcek.appointmenttrackingsystem.R
 import com.kerempurcek.appointmenttrackingsystem.databinding.FragmentLoginPageBinding
 import java.io.Console
@@ -30,10 +38,14 @@ class LoginPage : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        auth = Firebase.auth
+        db = Firebase.firestore
 
     }
 
@@ -49,65 +61,44 @@ class LoginPage : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // ToggleGroup'dan buton seçimi yapılınca
-        // Renkleri tanımla
-        val selectedColor = ColorStateList.valueOf(Color.parseColor("#18A0FB"))
-        val defaultColor = ColorStateList.valueOf(Color.parseColor("#FFFFFF"))
-        val selectedTextColor = Color.parseColor("#FFFFFF")
-        val defaultTextColor = Color.parseColor("#000000")
 
-        binding.ToggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
-            if (isChecked) {
-                when (checkedId) {
-                    R.id.UserButton -> {
-                        binding.UserButton.backgroundTintList = selectedColor
-                        binding.OwnerButton.backgroundTintList = defaultColor
-                        binding.UserButton.setTextColor(selectedTextColor)
-                        binding.OwnerButton.setTextColor(defaultTextColor)
-                    }
-
-                    R.id.OwnerButton -> {
-                        binding.OwnerButton.backgroundTintList = selectedColor
-                        binding.UserButton.backgroundTintList = defaultColor
-                        binding.OwnerButton.setTextColor(selectedTextColor)
-                        binding.UserButton.setTextColor(defaultTextColor)
-                    }
-                }
-            }
-        }
         binding.registerLogin.setOnClickListener {
             register(it)
         }
 
-        //Parola Alt Çizgi
-        binding.TextForgotPassword.paintFlags = binding.TextForgotPassword.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-        // Kullanıcı seçimi tutmak için değişkenler
-        var isUserButtonSelected = false
-        var isOwnerButtonSelected = false
-        // UserButton'a tıklanma durumu
-        binding.UserButton.setOnClickListener {
-            isUserButtonSelected = true
-            isOwnerButtonSelected = false // Diğer butonu sıfırla
+
+
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+
+            binding.root.visibility = View.INVISIBLE
+
+            //eğer kullanıcı giriş yaptıysa o çıkış yapana kadar login ekranına götürmemize gerek yok
+            val UserId = currentUser.uid
+            db.collection("UserTypes").document(UserId).get().addOnSuccessListener { document ->
+                val role = document.get("userType")
+                if (role == "Berber") {
+
+                    val action = LoginPageDirections.actionLoginPageToBarberMainFragment()
+                    findNavController().navigate(action)
+
+                } else {
+                    val action = LoginPageDirections.actionLoginPageToUserMainFragment()
+                    findNavController().navigate(action)
+                }
+
+            }
+
         }
-        // OwnerButton'a tıklanma durumu
-        binding.OwnerButton.setOnClickListener {
-            isUserButtonSelected = false // Diğer butonu sıfırla
-            isOwnerButtonSelected = true
-        }
+
 
         //giriş yaptıktan sonra anasayfaya gelmek
         binding.LoginButton.setOnClickListener {
 
-            if(isUserButtonSelected){
-                LoginToHome(it)
-
-            }else if(isOwnerButtonSelected){
-                LogintoOwnerHome(it)
-            }else{
-                Toast.makeText(requireContext(),"Lütfen Kullanıcı Seçimi Yapınız! ",Toast.LENGTH_LONG).show()
-            }
+            LoginToHome(it)
 
         }
+
 
     }
 
@@ -124,16 +115,59 @@ class LoginPage : Fragment() {
         findNavController(view).navigate(action)
     }
 
-    fun LoginToHome(view: View){
-        val action = LoginPageDirections.actionLoginPageToUserMainFragment()
-        findNavController(view).navigate(action)
+    fun LoginToHome(view: View) {
+        val email = binding.LoginEmail.text.toString()
+        val password = binding.LoginPassword.text.toString()
 
 
-    }
 
-    fun LogintoOwnerHome(view: View){
-        val action = LoginPageDirections.actionLoginPageToBarberMainFragment()
-        Navigation.findNavController(view).navigate(action)
+        if (email.isNotEmpty() && password.isNotEmpty()) {
+            auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
+                val currentUser = auth.currentUser
+                if (currentUser != null) {
+                    val UserId = currentUser.uid
+                    db.collection("UserTypes").document(UserId).get()
+                        .addOnSuccessListener { document ->
+                            if (document.exists()) {
+                                val role = document.get("userType")
+                                if (role == "Berber") {
+                                    val action =
+                                        LoginPageDirections.actionLoginPageToBarberMainFragment()
+                                    findNavController().navigate(action)
+
+                                } else {
+                                    val action =
+                                        LoginPageDirections.actionLoginPageToUserMainFragment()
+                                    findNavController().navigate(action)
+
+                                }
+
+                            }
+
+
+                        }
+                }
+
+            }.addOnFailureListener { exception ->
+                // Yanlış Email veya Parola
+                if (exception is FirebaseAuthInvalidCredentialsException || exception is FirebaseAuthInvalidUserException) {
+
+                    Toast.makeText(requireContext(), "Hatalı email veya parola!", Toast.LENGTH_LONG)
+                        .show()
+                } else {
+                    // Diğer Hatalar
+                    Toast.makeText(requireContext(), exception.localizedMessage, Toast.LENGTH_LONG)
+                        .show()
+
+                }
+            }
+        }else {
+            Toast.makeText(requireContext(), "Email ve parola boş olamaz!", Toast.LENGTH_SHORT).show()
+        }
+
+
+
+
     }
 
 

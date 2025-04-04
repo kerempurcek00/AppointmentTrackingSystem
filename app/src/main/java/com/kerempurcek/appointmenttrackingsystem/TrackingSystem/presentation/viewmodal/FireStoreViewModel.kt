@@ -1,10 +1,7 @@
 package com.kerempurcek.appointmenttrackingsystem.TrackingSystem.presentation.viewmodal
 
 import android.app.Application
-import android.content.Context
-import android.view.View
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,14 +11,16 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.kerempurcek.appointmenttrackingsystem.TrackingSystem.domain.model.AppointmentList
 import com.kerempurcek.appointmenttrackingsystem.TrackingSystem.domain.model.EditOwnerDataClass
 import com.kerempurcek.appointmenttrackingsystem.TrackingSystem.domain.model.ShopInfo
+import com.kerempurcek.appointmenttrackingsystem.TrackingSystem.domain.model.StaffInfo
 import com.kerempurcek.appointmenttrackingsystem.TrackingSystem.domain.model.UserTypes
-import com.kerempurcek.appointmenttrackingsystem.TrackingSystem.presentation.scheduler.AppointmentScheduler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class FireStoreViewModel(application: Application) : AndroidViewModel(application) {
     private val db = FirebaseFirestore.getInstance()  // tek bir firestore nesnesi
     private val auth  = FirebaseAuth.getInstance()
+    private val _staffs = MutableLiveData<List<StaffInfo>>()
+    val staffs : LiveData<List<StaffInfo>> get()  = _staffs
     val _owners = MutableLiveData<List<EditOwnerDataClass>>()
     val owners: LiveData<List<EditOwnerDataClass>> = _owners // Public olarak immutable
     val _CustomerAppointments = MutableLiveData<List<AppointmentList>>()
@@ -46,11 +45,11 @@ class FireStoreViewModel(application: Application) : AndroidViewModel(applicatio
             db.collection("OwnerInformation").get().addOnSuccessListener {result->
                 if(result!=null){
                     _owners.value = listOf()// doluysa eğer liste sil
-                    for(documents in result){
-                        val shopName = documents.get("shopName") as String
-                        val ownerName = documents.get("ownerName") as String
-                        val ownerPhone = documents.get("ownerPhone") as String
-                        val isOpen = documents.get("isOpen") as Boolean
+                    for(berber in result){
+                        val shopName = berber.get("shopName") as String
+                        val ownerName = berber.get("ownerName") as String
+                        val ownerPhone = berber.get("ownerPhone") as String
+                        val isOpen = berber.get("isOpen") as Boolean
                         val list = EditOwnerDataClass(shopName,ownerName,ownerPhone,isOpen)
                         tempList.add(list)
 
@@ -71,21 +70,45 @@ class FireStoreViewModel(application: Application) : AndroidViewModel(applicatio
         _loading.value = true
 
         val currentUserId = auth.currentUser?.uid ?: return // Null güvenliği için
-        db.collection("OwnerInformation").document(currentUserId).get()
-            .addOnSuccessListener { result ->
+        db.collection("OwnerInformation").document(currentUserId)
+            .addSnapshotListener() { shopInfo,e ->
 
-                if (result.exists()) {
-                    // Null kontrolü ile güvenli şekilde verileri al
-                    val shopName = result.getString("shopName")
-                        ?: "Bilinmiyor"  // Null olursa "Bilinmiyor" ata
-                    val ownerPhone = result.getString("ownerPhone")
-                        ?: "Bilinmiyor" // Null olursa "Bilinmiyor" ata
-                    _shopInfo.value = ShopInfo(shopName, ownerPhone)  //ShopInfo modelden çekildi
+                if (shopInfo != null) {
+                    if (shopInfo.exists()) {
+                        // Null kontrolü ile güvenli şekilde verileri al
+                        val shopName = shopInfo.getString("shopName")
+                            ?: "Bilinmiyor"  // Null olursa "Bilinmiyor" ata
+                        val ownerPhone = shopInfo.getString("ownerPhone")
+                            ?: "Bilinmiyor" // Null olursa "Bilinmiyor" ata
+                        _shopInfo.value = ShopInfo(shopName, ownerPhone)  //ShopInfo modelden çekildi
 
 
+                    }
                 }
                 _loading.value =false
             }
+
+    }
+
+    fun getStaffsData(auth:FirebaseAuth){
+        val tempList = mutableListOf<StaffInfo>() // Geçici liste oluştur
+        val currentUserId = auth.currentUser?.uid ?: return
+        _loading.value = true
+        db.collection("staffs").document(currentUserId).collection("staffInfo").get().addOnSuccessListener { staffsInfo ->
+          if(staffsInfo!=null){
+              for(staff in staffsInfo){
+                  val shopname = staff.getString("shopName") as String
+                  val staffNameSurname = staff.getString("staffNameSurname") as String
+                  val isChecked = staff.get("isChecked") as Boolean
+                  tempList.add(StaffInfo(shopname,staffNameSurname,isChecked))
+              }
+              _staffs.value = tempList
+
+          }
+
+            _loading.value =false
+        }
+
 
     }
 
@@ -169,22 +192,7 @@ class FireStoreViewModel(application: Application) : AndroidViewModel(applicatio
             }
 
     }
-   // Randevu eklendiğinde alarmı başlayacak
-    fun addAppointmentAndSchedule(context: Context, appointment: AppointmentList) {
-        val auth = FirebaseAuth.getInstance()
-        val userId = auth.currentUser?.uid ?: return // Kullanıcı giriş yapmamışsa çık
 
-        val db = FirebaseFirestore.getInstance()
-
-        // Kullanıcının ID'si belge ID'si olacak
-        val docRef = db.collection("CustomerAppointments").document(userId)
-
-        docRef.set(appointment) // Firestore'a kaydet
-
-        // AlarmManager ile zamanı planla
-        val scheduler = AppointmentScheduler(context)
-        scheduler.scheduleAppointment(appointment.date)
-    }
 
 
 }

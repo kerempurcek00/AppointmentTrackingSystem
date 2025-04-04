@@ -55,6 +55,14 @@
         <action
             android:id="@+id/action_appoinmentFragment_to_userMainFragment"
             app:destination="@id/userMainFragment" />
+        <action
+            android:id="@+id/action_appoinmentFragment_to_bottomSheetFragment"
+            app:destination="@id/bottomSheetFragment"
+            app:enterAnim="@anim/fragment_slide_in"
+            app:exitAnim="@anim/fragment_slide_out"
+            app:popEnterAnim="@anim/fragment_fade_in"
+            app:popExitAnim="@anim/fragment_fade_out"
+            />
     </fragment>
     <fragment
         android:id="@+id/userPageFragment"
@@ -106,6 +114,9 @@
         <action
             android:id="@+id/action_ownerUserFragment_to_loginPage"
             app:destination="@id/loginPage" />
+        <action
+            android:id="@+id/action_ownerUserFragment_to_ownerStaffFragment"
+            app:destination="@id/ownerStaffFragment" />
     </fragment>
     <fragment
         android:id="@+id/ownerAppointmentFragment"
@@ -118,5 +129,23 @@
         <action
             android:id="@+id/action_ownerAppointmentFragment_to_ownerUserFragment"
             app:destination="@id/ownerUserFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ownerStaffFragment"
+        android:name="com.kerempurcek.appointmenttrackingsystem.TrackingSystem.presentation.ui.OwnerStaffFragment"
+        android:label="fragment_owner_staff"
+        tools:layout="@layout/fragment_owner_staff" >
+        <action
+            android:id="@+id/action_ownerStaffFragment_to_ownerUserFragment"
+            app:destination="@id/ownerUserFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bottomSheetFragment"
+        android:name="com.kerempurcek.appointmenttrackingsystem.TrackingSystem.presentation.ui.BottomSheetFragment"
+        android:label="fragment_bottom_sheet"
+        tools:layout="@layout/fragment_bottom_sheet" >
+        <action
+            android:id="@+id/action_bottomSheetFragment_to_appoinmentFragment"
+            app:destination="@id/appoinmentFragment" />
     </fragment>
 </navigation>

@@ -1,12 +1,11 @@
 package com.kerempurcek.appointmenttrackingsystem.TrackingSystem.presentation.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import androidx.lifecycle.ViewModel
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,8 +14,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import com.kerempurcek.appointmenttrackingsystem.R
 import com.kerempurcek.appointmenttrackingsystem.TrackingSystem.presentation.adapter.HomeAdapter
-import com.kerempurcek.appointmenttrackingsystem.TrackingSystem.domain.model.EditOwnerDataClass
-
 import com.kerempurcek.appointmenttrackingsystem.TrackingSystem.presentation.viewmodal.FireStoreViewModel
 import com.kerempurcek.appointmenttrackingsystem.databinding.FragmentBarberMainBinding
 

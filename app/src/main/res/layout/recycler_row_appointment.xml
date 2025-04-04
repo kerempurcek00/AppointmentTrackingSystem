@@ -18,15 +18,17 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/CardAppointment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#2318A0FB">
 
             <Button
                 android:id="@+id/AppointmentCancelButton"
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="35dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/buttondesign"
@@ -36,7 +38,23 @@
                 android:textSize="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toEndOf="@+id/DoneButton"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAppointmentDate" />
+
+            <Button
+                android:id="@+id/DoneButton"
+                android:layout_width="150dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/buttondesign"
+                android:fontFamily="@font/poppins_medium"
+                android:padding="2dp"
+                android:text="Tamamlandı"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/AppointmentCancelButton" />
 
             <TextView
                 android:id="@+id/textViewCustomerName"

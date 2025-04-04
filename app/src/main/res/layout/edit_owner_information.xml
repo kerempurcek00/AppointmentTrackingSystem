@@ -43,12 +43,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ShopNameEditor"
-        app:placeholderText="Dükkan Sahibinin Telefon Numarasını Giriniz">
+        app:placeholderText="Çalışma Saatleriniz">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/EditTextOwnerPhone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            />
 
     </com.google.android.material.textfield.TextInputLayout>
 

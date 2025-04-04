@@ -1,6 +1,44 @@
 <resources>
     <string name="app_name">AppointmentTrackingSystem</string>
+    <string name="user">Kullanıcı</string>
+    <string name="barber">Berber</string>
+    <string name="UserTypesSelection">Lütfen kullanıcı türünüzü seçiniz!</string>
+    <string name="errorEmailandPassword">Hatalı email veya parola!</string>
+    <string name="emptyEmailandPassword">Email ve parola boş olamaz!</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="label">Bu bir etiket örneğidir</string>
+
+    <string name="barber_guidelines">
+        <![CDATA[
+        Değerli Berber Dükkanı Sahipleri,
+
+        Berber randevu uygulamamıza işletmenizi ekleyerek müşterilerinize daha kolay ulaşabilirsiniz.
+        Ancak, platformun düzenli ve güvenilir bir şekilde işlemesi için aşağıdaki kurallara uymanız gerekmektedir.
+
+        **1. İşletme Bilgileri**
+        - İşletmenizin adı, adresi ve iletişim bilgileri eksiksiz ve doğru girilmelidir.
+        - Çalışma saatleri güncel tutulmalı ve değişiklikler anında sisteme yansıtılmalıdır.
+        - Hizmetleriniz ve fiyatlarınız açık ve net bir şekilde belirtilmelidir.
+
+        **2. Randevu Kuralları**
+        - Randevulara zamanında uyulmalı, gecikme durumunda müşteriye önceden haber verilmelidir.
+        - Randevu iptalleri en az 24 saat önceden müşteriye bildirilmelidir.
+        - Müşterilerin mağdur olmaması için randevu saatlerine sadık kalınmalıdır.
+
+        **3. Müşteri Memnuniyeti ve İletişim**
+        - Müşterilere karşı saygılı ve profesyonel bir tutum sergilenmelidir.
+        - Gelen yorum ve puanlamalar dikkate alınmalı, olumsuz geri bildirimler için çözüm üretilmelidir.
+        - Hizmet kalitenizi artırmak için müşteri önerilerini değerlendirebilirsiniz.
+
+        **4. Platform Kullanımı**
+        - Uygulamada yanıltıcı veya yanlış bilgi paylaşmak yasaktır.
+        - Reklam ve promosyonlar için platformun sunduğu imkanlar kullanılabilir.
+        - Platforma uygun olmayan içerik veya davranışlar tespit edilirse işletme sistemden kaldırılabilir.
+
+        Bu kurallar, sistemin sağlıklı bir şekilde işlemesi ve hem işletme sahiplerinin hem de müşterilerin memnuniyetini sağlamak için belirlenmiştir.
+
+        **Teşekkürler,**
+        _Berber Randevu Uygulaması Ekibi_
+        ]]>
+    </string>
 </resources>

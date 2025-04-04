@@ -95,11 +95,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/buttondesign"
-
                     android:fontFamily="@font/poppins_medium"
                     android:text=""
                     android:textAlignment="center"
-
                     android:textSize="15dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.512"
@@ -114,7 +112,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="15dp"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Telefon Numarası"
+                    android:text="Çalışma Saatleri"
                     android:textColor="@color/textColor"
                     android:textSize="25dp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -221,6 +219,22 @@
                     android:scaleType="fitCenter"
                     android:src="@drawable/infoicon"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/StaffButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/buttondesign"
+                    android:fontFamily="@font/poppins_medium"
+                    android:paddingVertical="2dp"
+                    android:paddingHorizontal="5dp"
+                    android:textSize="16dp"
+                    android:textAlignment="center"
+                    android:text="Personel Düzenle"
+                    app:layout_constraintStart_toEndOf="@+id/EditButton"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

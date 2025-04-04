@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -98,7 +99,8 @@ class AppoinmentFragment : Fragment() {
 
         binding.appoinment.setOnClickListener {
             //tarih
-            datePicker()
+            //datePicker()
+            bottomSheet(it)
 
         }
 
@@ -181,7 +183,7 @@ class AppoinmentFragment : Fragment() {
                         nameSurname = userNameSurname
                     )
 
-                    viewModel.addAppointmentAndSchedule(requireContext(), appointmentList)
+
                     val action = AppoinmentFragmentDirections.actionAppoinmentFragmentToApproveAppointment()
                     Navigation.findNavController(view).navigate(action)
                 }
@@ -309,6 +311,12 @@ class AppoinmentFragment : Fragment() {
         viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
             binding.LinearProgressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
+    }
+
+    fun bottomSheet(view:View){
+        val action = AppoinmentFragmentDirections.actionAppoinmentFragmentToBottomSheetFragment()
+        Navigation.findNavController(view).navigate(action)
+
     }
 
 }

@@ -1,24 +1,13 @@
 package com.kerempurcek.appointmenttrackingsystem.TrackingSystem.presentation.ui
 
-import android.content.res.ColorStateList
-import android.graphics.Color
-import android.graphics.Paint
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Toast
-import androidx.activity.SystemBarStyle
-import androidx.activity.enableEdgeToEdge
-import androidx.core.content.ContextCompat
-import androidx.core.view.WindowCompat
-import androidx.navigation.Navigation
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.navigation.NavigationBarPresenter
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -28,8 +17,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import com.kerempurcek.appointmenttrackingsystem.R
 import com.kerempurcek.appointmenttrackingsystem.databinding.FragmentLoginPageBinding
-import java.io.Console
-import java.util.Locale
 
 
 class LoginPage : Fragment() {
@@ -75,9 +62,9 @@ class LoginPage : Fragment() {
 
             //eğer kullanıcı giriş yaptıysa o çıkış yapana kadar login ekranına götürmemize gerek yok
             val UserId = currentUser.uid
-            db.collection("UserTypes").document(UserId).get().addOnSuccessListener { document ->
-                val role = document.get("userType")
-                if (role == "Berber") {
+            db.collection("UserTypes").document(UserId).get().addOnSuccessListener { Roles ->
+                val role = Roles.get("userType")
+                if (role == getString(R.string.barber)) {
 
                     val action = LoginPageDirections.actionLoginPageToBarberMainFragment()
                     findNavController().navigate(action)
@@ -127,9 +114,9 @@ class LoginPage : Fragment() {
                 if (currentUser != null) {
                     val UserId = currentUser.uid
                     db.collection("UserTypes").document(UserId).get()
-                        .addOnSuccessListener { document ->
-                            if (document.exists()) {
-                                val role = document.get("userType")
+                        .addOnSuccessListener { SignIn ->
+                            if (SignIn.exists()) {
+                                val role = SignIn.get("userType")
                                 if (role == "Berber") {
                                     val action =
                                         LoginPageDirections.actionLoginPageToBarberMainFragment()
@@ -152,7 +139,7 @@ class LoginPage : Fragment() {
                 // Yanlış Email veya Parola
                 if (exception is FirebaseAuthInvalidCredentialsException || exception is FirebaseAuthInvalidUserException) {
 
-                    Toast.makeText(requireContext(), "Hatalı email veya parola!", Toast.LENGTH_LONG)
+                    Toast.makeText(requireContext(), getString(R.string.errorEmailandPassword), Toast.LENGTH_LONG)
                         .show()
                 } else {
                     // Diğer Hatalar
@@ -162,7 +149,7 @@ class LoginPage : Fragment() {
                 }
             }
         }else {
-            Toast.makeText(requireContext(), "Email ve parola boş olamaz!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.emptyEmailandPassword), Toast.LENGTH_SHORT).show()
         }
 
 

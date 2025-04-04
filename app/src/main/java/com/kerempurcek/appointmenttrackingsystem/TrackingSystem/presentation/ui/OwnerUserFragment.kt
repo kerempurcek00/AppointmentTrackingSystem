@@ -2,6 +2,9 @@ package com.kerempurcek.appointmenttrackingsystem.TrackingSystem.presentation.ui
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -53,39 +56,12 @@ class OwnerUserFragment : Fragment() {
         return view
     }
 
-    var infoText = "\n" +
-            "\n" +
-            "Değerli Berber Dükkanı Sahipleri,  \n" +
-            "\n" +
-            "Berber randevu uygulamamıza işletmenizi ekleyerek müşterilerinize daha kolay ulaşabilirsiniz. Ancak, platformun düzenli ve güvenilir bir şekilde işlemesi için aşağıdaki kurallara uymanız gerekmektedir.  \n" +
-            "\n" +
-            "1. İşletme Bilgileri \n" +
-            "- İşletmenizin adı, adresi ve iletişim bilgileri eksiksiz ve doğru girilmelidir.  \n" +
-            "- Çalışma saatleri güncel tutulmalı ve değişiklikler anında sisteme yansıtılmalıdır.  \n" +
-            "- Hizmetleriniz ve fiyatlarınız açık ve net bir şekilde belirtilmelidir.  \n" +
-            "\n" +
-            "2. Randevu Kuralları\n" +
-            "- Randevulara zamanında uyulmalı, gecikme durumunda müşteriye önceden haber verilmelidir.  \n" +
-            "- Randevu iptalleri en az 24 saat önceden müşteriye bildirilmelidir.  \n" +
-            "- Müşterilerin mağdur olmaması için randevu saatlerine sadık kalınmalıdır.  \n" +
-            "\n" +
-            "3. Müşteri Memnuniyeti ve İletişim \n" +
-            "- Müşterilere karşı saygılı ve profesyonel bir tutum sergilenmelidir.  \n" +
-            "- Gelen yorum ve puanlamalar dikkate alınmalı, olumsuz geri bildirimler için çözüm üretilmelidir.  \n" +
-            "- Hizmet kalitenizi artırmak için müşteri önerilerini değerlendirebilirsiniz.  \n" +
-            " 4. Platform Kullanımı\n" +
-            "- Uygulamada yanıltıcı veya yanlış bilgi paylaşmak yasaktır.  \n" +
-            "- Reklam ve promosyonlar için platformun sunduğu imkanlar kullanılabilir.  \n" +
-            "- Platforma uygun olmayan içerik veya davranışlar tespit edilirse işletme sistemden kaldırılabilir.  \n" +
-            "\n" +
-            "Bu kurallar, sistemin sağlıklı bir şekilde işlemesi ve hem işletme sahiplerinin hem de müşterilerin memnuniyetini sağlamak için belirlenmiştir.  \n" +
-            "\n" +
-            "Teşekkürler,  \n" +
-            "Berber Randevu Uygulaması Ekibi"
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[FireStoreViewModel::class.java]
+
 
         getShopInfo()
         nameSurname()
@@ -108,9 +84,11 @@ class OwnerUserFragment : Fragment() {
             updateButton()
         }
 
+
+
         val dialogBinding =
             EditOwnerInformationBinding.inflate(LayoutInflater.from(requireContext()))
-
+        val infoText = getString(R.string.barber_guidelines)
         binding.EditButton.setOnClickListener {
 
             val dialog = MaterialAlertDialogBuilder(requireContext(), R.style.CustomAlertDialog)
@@ -165,6 +143,9 @@ class OwnerUserFragment : Fragment() {
                     dialog.dismiss()
                 }
                 .show()
+        }
+        binding.StaffButton.setOnClickListener {
+            staffPage(it)
         }
 
     }
@@ -221,35 +202,36 @@ class OwnerUserFragment : Fragment() {
 
 
 
-
+    //Mevcut Button Durumu
     private fun toggleShopStatus() {
         val barberId = auth.currentUser?.uid // Berberin ID'si
         val shopRef = db.collection("OwnerInformation").document(barberId.toString())
 
         // Firestore'dan mevcut durumu çek
-        shopRef.get().addOnSuccessListener { document ->
-            if (document.exists()) {
+        shopRef.get().addOnSuccessListener { İsOpen ->
+            if (İsOpen.exists()) {
                 // 'isOpen' durumunu al, eğer yoksa null döner
-                val isOpen = document.getBoolean("isOpen")
+                val isOpen = İsOpen.getBoolean("isOpen")
                 if (isOpen!=null){
-                    updateButtonUI(isOpen)
+                    ButtonStatus(isOpen)
                 }
             }
         }
     }
+    // Buttonun Kapalı - Açık Durumunu Güncelleme
     private fun updateButton(){
         val barberId = auth.currentUser?.uid // Berberin ID'si
         val shopRef = db.collection("OwnerInformation").document(barberId.toString())
 
         // Firestore'dan mevcut durumu çek
-        shopRef.get().addOnSuccessListener { document ->
-            if (document.exists()) {
+        shopRef.get().addOnSuccessListener { isOpen ->
+            if (isOpen.exists()) {
                 // 'isOpen' durumunu al, eğer yoksa null döner
-                val isOpen = document.getBoolean("isOpen")
+                val isOpen = isOpen.getBoolean("isOpen")
 
                 if (isOpen != null) {
                     // Butonun başlangıç durumunu ayarla
-                    updateButtonUIX(isOpen)
+                    updateButtonUI(isOpen)
 
                     // Tıklama sonrası 'isOpen' değerini tersine çevir ve Firestore'a kaydet
                     shopRef.update("isOpen", !isOpen) // Durumu tersine çevir
@@ -271,7 +253,7 @@ class OwnerUserFragment : Fragment() {
 
 
     }
-    private fun updateButtonUI(isOpen: Boolean) {
+    private fun ButtonStatus(isOpen: Boolean) {
         // Eğer 'isOpen' true ise buton "Dükkanı Kapat" olacak, false ise "Dükkanı Aç"
         binding.IsOpenButton.text = if (isOpen) "Açık" else "Kapalı"
 
@@ -285,7 +267,7 @@ class OwnerUserFragment : Fragment() {
         binding.IsOpenButton.setTextColor(textColor)
 
     }
-    private fun updateButtonUIX(isOpen: Boolean) {
+    private fun updateButtonUI(isOpen: Boolean) {
         // Eğer 'isOpen' true ise buton "Dükkanı Kapat" olacak, false ise "Dükkanı Aç"
         binding.IsOpenButton.text = if (isOpen) "Kapalı" else "Açık"
 
@@ -299,6 +281,15 @@ class OwnerUserFragment : Fragment() {
         binding.IsOpenButton.setBackgroundColor(backgroundColor)
         binding.IsOpenButton.setTextColor(textColor)
 
+
+
+
+    }
+
+    private fun staffPage(view: View){
+
+            val action = OwnerUserFragmentDirections.actionOwnerUserFragmentToOwnerStaffFragment()
+            Navigation.findNavController(view).navigate(action)
 
 
 

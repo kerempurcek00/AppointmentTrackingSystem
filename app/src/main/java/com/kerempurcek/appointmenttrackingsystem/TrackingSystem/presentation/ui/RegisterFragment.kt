@@ -1,13 +1,13 @@
 package com.kerempurcek.appointmenttrackingsystem.TrackingSystem.presentation.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -15,21 +15,21 @@ import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import com.kerempurcek.appointmenttrackingsystem.R
-import com.kerempurcek.appointmenttrackingsystem.databinding.FragmentLoginPageBinding
 import com.kerempurcek.appointmenttrackingsystem.databinding.FragmentRegisterBinding
-import kotlinx.coroutines.NonDisposableHandle.parent
 
 
 class RegisterFragment : Fragment() {
 
     private var _binding: FragmentRegisterBinding? = null
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
 
     //Firebase
-    private  lateinit var  auth:FirebaseAuth
-    private lateinit var  db:FirebaseFirestore
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
+
     // UserType
     var selectedItem = ""
 
@@ -54,13 +54,9 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //Kayıt Ol Butonuna Basıldığında Giriş Sayfasına Yönlendirme
-        binding.RegisterPageButton.setOnClickListener{RegisterToLogin(it)}
+        binding.RegisterPageButton.setOnClickListener { RegisterToLogin(it) }
 
-       getspinnerdata()
-
-
-
-
+        getspinnerdata()
 
 
     }
@@ -71,68 +67,78 @@ class RegisterFragment : Fragment() {
         _binding = null
     }
 
-fun RegisterToLogin(view: View){
+    fun RegisterToLogin(view: View) {
 
-    //Firebase Auth
-    val email = binding.TextEmailRegister.text.toString()
-    val password = binding.TextPasswordRegister.text.toString()
+        //Firebase Auth
+        val email = binding.TextEmailRegister.text.toString()
+        val password = binding.TextPasswordRegister.text.toString()
 
 
-    if(email.isNotEmpty()&&password.isNotEmpty()){
-        auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener{task ->
-            if(task.isSuccessful){
-                val userId = auth.currentUser?.uid
-                if(!userId.isNullOrEmpty()){
-                    addDataUserType()
+        if (email.isNotEmpty() && password.isNotEmpty()) {
+            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { createUser ->
+                if (createUser.isSuccessful) {
+                    val userId = auth.currentUser?.uid
+                    if (!userId.isNullOrEmpty()) {
+                        addDataUserType()
+                    }
+
+                    val action = RegisterFragmentDirections.actionRegisterFragmentToLoginPage()
+                    Navigation.findNavController(view).navigate(action)
+
                 }
 
-                val action = RegisterFragmentDirections.actionRegisterFragmentToLoginPage()
-                Navigation.findNavController(view).navigate(action)
+            }.addOnFailureListener { exception ->
+                Toast.makeText(requireContext(), exception.localizedMessage, Toast.LENGTH_LONG)
+                    .show()
 
             }
 
-        }.addOnFailureListener{exception ->
-            Toast.makeText(requireContext(),exception.localizedMessage,Toast.LENGTH_LONG).show()
-
         }
+
 
     }
 
+    fun getspinnerdata() {
+        val spinner = binding.spinnerUserBarber
 
+        val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item)
+        adapter.add(getString(R.string.user))
+        adapter.add(getString(R.string.barber))
 
-}
-fun getspinnerdata(){
-    val spinner  = binding.spinnerUserBarber
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-    val adapter = ArrayAdapter<String>(requireContext(),android.R.layout.simple_spinner_item)
-    adapter.add("Kullanıcı")
-    adapter.add("Berber")
+        spinner.adapter = adapter
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.UserTypesSelection),
+                    Toast.LENGTH_LONG
+                ).show()
+                selectedItem = parent?.getItemAtPosition(position).toString()
+                println(selectedItem)
 
-    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            }
 
-    spinner.adapter = adapter
-    spinner.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
-        override fun onItemSelected(parent:AdapterView<*>?,view:View,position:Int,id:Long){
-            Toast.makeText(requireContext(),"Lütfen kullanıcı türünüzü seçiniz!",Toast.LENGTH_LONG).show()
-            selectedItem = parent?.getItemAtPosition(position).toString()
-            println(selectedItem)
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Hiçbir öğe seçilmediğinde yapılacak işlemler
 
-        }
-
-        override fun onNothingSelected(parent: AdapterView<*>?) {
-            // Hiçbir öğe seçilmediğinde yapılacak işlemler
-
+            }
         }
     }
-}
 
-    fun addDataUserType(){
+    fun addDataUserType() {
 
         // FireStore
-        val UserTypeMap = hashMapOf<String,Any>()
+        val UserTypeMap = hashMapOf<String, Any>()
         val UserId = auth.currentUser?.uid    // userID neyse döküman id olacak
-        UserTypeMap.put("userType",selectedItem)
-        UserTypeMap.put("nameSurname",binding.TextViewNameSurname.text.toString())
+        UserTypeMap.put("userType", selectedItem)
+        UserTypeMap.put("nameSurname", binding.TextViewNameSurname.text.toString())
 
         db.collection("UserTypes").document(UserId!!).set(UserTypeMap)
     }

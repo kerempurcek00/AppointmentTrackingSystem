@@ -67,6 +67,10 @@ class OwnerAppointmentAdapter(var customerAppointments: MutableList<AppointmentL
                 .create()
             dialog.show()
         }
+        holder.binding.DoneButton.setOnClickListener {
+            DoneAppointment(appointment.nameSurname,holder,position)
+
+        }
     }
 
     fun updateList(newList: List<AppointmentList>) {
@@ -128,6 +132,28 @@ class OwnerAppointmentAdapter(var customerAppointments: MutableList<AppointmentL
     }
 
 
+    fun DoneAppointment(nameSurname: String,holder:OwnerHolder,position: Int){
+        db.collection("CustomerAppointments").whereEqualTo("nameSurname",nameSurname).get().addOnSuccessListener { result->
 
+            if(result!=null){
+                for (document in result){
+                    db.collection("DoneAppointments").document(document.id).set(document).addOnSuccessListener {
+                        Toast.makeText(holder.binding.root.context,"Randevu tamamlanmıştır!",Toast.LENGTH_LONG).show()
+                    }
+                    db.collection("CustomerAppointments").document(document.id).delete()
+
+                }
+                // RecyclerView'u güncellemek için
+                if (!customerAppointments.isNullOrEmpty() && position in customerAppointments.indices) {
+                    customerAppointments.removeAt(position)
+                    notifyItemRemoved(position)
+                    holder.binding.AppointmentConstraintLayout.visibility = View.GONE
+                }
+
+            }
+        }
+
+
+    }
 }
 
